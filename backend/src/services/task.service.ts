@@ -9,9 +9,8 @@ export class TaskService {
   async getById(id: string): Promise<Task | null> {
     return TaskModel.findById(id).exec();
   }
-
-  async create(title: string, description?: string): Promise<Task> {
-    const task = new TaskModel({ title, description });
+  async create(title: string, description?: string, dueDate?: Date): Promise<Task> {
+    const task = new TaskModel({ title, description, dueDate: dueDate || new Date() });
     return task.save();
   }
 

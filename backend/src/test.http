@@ -3,8 +3,9 @@ POST http://localhost:3000/api/tasks
 Content-Type: application/json
 
 {
-  "title": "Task after adding socket.io",
-  "description": "This is another a new task description."
+  "title": "Task with Due Date",
+  "description": "This is task with a due date.",
+  "dueDate": "2025-06-30T00:00:00.000Z"
 }
 
 ### Get all tasks
@@ -17,12 +18,11 @@ GET http://localhost:3000/api/tasks/684feb19a7c713cc15c9ed03
 Content-Type: application/json
 
 ### Update a specific task by ID
-PUT http://localhost:3000/api/tasks/684feb19a7c713cc15c9ed03
+PUT http://localhost:3000/api/tasks/684feb38a7c713cc15c9ed07
 Content-Type: application/json
 
 {
-  "title": "Updated Task Title-updated",
-  "description": "Updated task description.---updated"
+  "dueDate": "2025-10-01T00:00:00.000Z"
 }
 
 ### Delete a specific task by ID

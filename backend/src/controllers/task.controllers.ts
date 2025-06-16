@@ -18,8 +18,8 @@ export const getTaskById = async (req: Request, res: Response): Promise<void> =>
 };
 
 export const createTask = async (req: Request, res: Response): Promise<void> => {
-  const { title, description } = req.body;
-  const createdTask = await taskService.create(title, description);
+  const { title, description, dueDate } = req.body;
+  const createdTask = await taskService.create(title, description, dueDate);
   res.status(201).json(createdTask);
 };
 
