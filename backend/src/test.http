@@ -1,0 +1,30 @@
+### Create a new task
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Task after adding socket.io",
+  "description": "This is another a new task description."
+}
+
+### Get all tasks
+GET http://localhost:3000/api/tasks
+Content-Type: application/json
+
+
+### Get a specific task by ID
+GET http://localhost:3000/api/tasks/684feb19a7c713cc15c9ed03
+Content-Type: application/json
+
+### Update a specific task by ID
+PUT http://localhost:3000/api/tasks/684feb19a7c713cc15c9ed03
+Content-Type: application/json
+
+{
+  "title": "Updated Task Title-updated",
+  "description": "Updated task description.---updated"
+}
+
+### Delete a specific task by ID
+DELETE http://localhost:3000/api/tasks/684fd7808c72721ecbd10ebb
+Content-Type: application/json
