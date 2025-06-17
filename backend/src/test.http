@@ -3,9 +3,10 @@ POST http://localhost:3000/api/tasks
 Content-Type: application/json
 
 {
-  "title": "Task with Due Date",
-  "description": "This is task with a due date.",
-  "dueDate": "2025-06-30T00:00:00.000Z"
+    "title": "Update Documentation",
+    "description": "Go through the API documentation and make necessary updates based on the recent changes. Add missing endpoint examples and update version references.",
+    "completed": false,
+    "dueDate": "2025-11-10T00:00:00.000Z"
 }
 
 ### Get all tasks
@@ -18,11 +19,11 @@ GET http://localhost:3000/api/tasks/684feb19a7c713cc15c9ed03
 Content-Type: application/json
 
 ### Update a specific task by ID
-PUT http://localhost:3000/api/tasks/684feb38a7c713cc15c9ed07
+PUT http://localhost:3000/api/tasks/685010e2f1b438c194626cbb
 Content-Type: application/json
 
 {
-  "dueDate": "2025-10-01T00:00:00.000Z"
+  "dueDate": "2025-03-15T00:00:00.000Z"
 }
 
 ### Delete a specific task by ID
