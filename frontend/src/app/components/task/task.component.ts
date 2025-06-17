@@ -23,6 +23,7 @@ export class TaskComponent {
       width: '250px',
       enterAnimationDuration: '0ms',
       exitAnimationDuration: '0ms',
+      data: { currentTaskId: this.task.id },
     });
   }
 

@@ -14,4 +14,12 @@ export class TaskService {
   getAllTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl);
   }
+
+  createTask(task: Partial<Task>): Observable<Task> {
+    return this.http.post<Task>(this.baseUrl, task);
+  }
+
+  deleteTask(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
 }

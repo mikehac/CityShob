@@ -12,8 +12,8 @@ const socketIoInit = (httpServer: any) => {
     console.log("Client connected:", socket.id);
 
     socket.on("task:create", (task) => {
-      // Save task to DB (optional here)
-      socket.broadcast.emit("task:created", task); // Notify all others
+      console.log("Task created:", task);
+      socket.broadcast.emit("task:created", task);
     });
 
     socket.on("task:update", (task) => {

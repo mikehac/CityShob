@@ -3,6 +3,13 @@
   Would you like to delete current task?
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+  <button
+    mat-button
+    mat-dialog-close
+    cdkFocusInitial
+    (click)="deleteTaskEvent()"
+  >
+    Ok
+  </button>
   <button mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

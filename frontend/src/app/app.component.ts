@@ -37,6 +37,17 @@ export class AppComponent {
     completed: false,
   };
 
+  constructor() {
+    this.socketService.onEvent<Task>('task:created').subscribe((task) => {
+      console.log('New task created:', task);
+      this.tasks$ = this.taskService.getAllTasks();
+    });
+    this.socketService.onEvent<Task>('task:deleted').subscribe((task) => {
+      console.log('Task deleted:', task);
+      this.tasks$ = this.taskService.getAllTasks();
+    });
+  }
+
   openEditDialog() {
     this.dialog.open(EditDialogComponent, {
       width: '1200px',
@@ -44,7 +55,7 @@ export class AppComponent {
       exitAnimationDuration: '0ms',
       data: {
         task: this.newTask,
-        actionType: 'edit',
+        actionType: 'add',
       },
     });
   }

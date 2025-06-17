@@ -11,15 +11,26 @@
     >
     <mat-form-field>
       <mat-label>Title</mat-label>
-      <input matInput [value]="data.task.title" />
+      <input matInput [value]="data.task.title" [formControl]="titleControl" />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Description</mat-label>
-      <textarea matInput [value]="data.task.description"></textarea>
+      <textarea
+        matInput
+        [value]="data.task.description"
+        [formControl]="descriptionControl"
+      ></textarea>
     </mat-form-field>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Update</button>
+  <button
+    mat-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    (click)="updateOrAddHandler()"
+  >
+    {{ data.actionType == "edit" ? "Update" : "Add" }}
+  </button>
   <button mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

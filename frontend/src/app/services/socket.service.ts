@@ -20,12 +20,18 @@ export class SocketService {
   }
 
   emitEvent(event: string, data: any) {
+    console.log(`Emitting event: ${event}`, data);
+    console.log('data:', data);
     this.socket.emit(event, data);
   }
 
   onEvent<T>(event: string) {
     return new Observable<T>((observer) => {
-      this.socket.on(event, (data: T) => observer.next(data));
+      this.socket.on(event, (data: T) => {
+        console.log(`Listening for event: ${event}`);
+        console.log('Received data:', data);
+        observer.next(data);
+      });
     });
   }
 }
