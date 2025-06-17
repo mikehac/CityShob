@@ -46,6 +46,10 @@ export class AppComponent {
       console.log('Task deleted:', task);
       this.tasks$ = this.taskService.getAllTasks();
     });
+    this.socketService.onEvent<Task>('task:updated').subscribe((task) => {
+      console.log('Task updated:', task);
+      this.tasks$ = this.taskService.getAllTasks();
+    });
   }
 
   openEditDialog() {

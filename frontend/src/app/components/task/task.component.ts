@@ -28,6 +28,7 @@ export class TaskComponent {
   }
 
   openEditDialog() {
+    console.log('Opening edit dialog for task:', this.task);
     this.dialog.open(EditDialogComponent, {
       width: '1200px',
       enterAnimationDuration: '0ms',

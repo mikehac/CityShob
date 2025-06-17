@@ -33,7 +33,14 @@ export class EditDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { task: Task; actionType: 'edit' | 'add' }
-  ) {}
+  ) {
+    // Initialize form controls with task data if in edit mode
+    if (this.data.actionType === 'edit' && this.data.task) {
+      this.titleControl.setValue(this.data.task.title);
+      this.descriptionControl.setValue(this.data.task.description || '');
+      this.completeTaskControl.setValue(this.data.task.completed);
+    }
+  }
 
   updateOrAddHandler() {
     const form = new FormControl({
@@ -44,11 +51,11 @@ export class EditDialogComponent {
     console.log(form.value);
     if (form.valid) {
       if (this.data.actionType === 'edit') {
-        // this.taskService
-        //   .updateTask(this.data.task.id, form.value)
-        //   .subscribe((task) => {
-        //     this.socketService.emit('taskUpdated', task);
-        //   });
+        this.taskService
+          .updateTask(this.data.task.id!, form.value as Task)
+          .subscribe((task) => {
+            this.socketService.emitEvent('task:update', task);
+          });
       } else {
         this.taskService.createTask(form.value as Task).subscribe((task) => {
           this.socketService.emitEvent('task:create', task);

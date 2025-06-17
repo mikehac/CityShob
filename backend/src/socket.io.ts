@@ -7,21 +7,19 @@ const socketIoInit = (httpServer: any) => {
       methods: ["GET", "POST"],
     },
   });
-
   io.on("connection", (socket) => {
     console.log("Client connected:", socket.id);
 
     socket.on("task:create", (task) => {
-      console.log("Task created:", task);
-      socket.broadcast.emit("task:created", task);
+      io.emit("task:created", task);
     });
 
     socket.on("task:update", (task) => {
-      socket.broadcast.emit("task:updated", task);
+      io.emit("task:updated", task);
     });
 
     socket.on("task:delete", (taskId) => {
-      socket.broadcast.emit("task:deleted", taskId);
+      io.emit("task:deleted", taskId);
     });
 
     socket.on("disconnect", () => {
