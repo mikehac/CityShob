@@ -22,6 +22,14 @@ const socketIoInit = (httpServer: any) => {
       io.emit("task:deleted", taskId);
     });
 
+    socket.on("task:disable-editing", (taskId) => {
+      io.emit("task:editing-disabled", taskId);
+    });
+
+    socket.on("task:enable-editing", (taskId) => {
+      io.emit("task:editing-enabled", taskId);
+    });
+
     socket.on("disconnect", () => {
       console.log("Client disconnected:", socket.id);
     });
