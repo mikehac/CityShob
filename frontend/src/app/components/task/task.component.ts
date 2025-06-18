@@ -55,7 +55,6 @@ export class TaskComponent {
   }
 
   openEditDialog() {
-    console.log('Opening edit dialog for task:', this.task);
     // Send socket event to disable editing for other users
     this.disableEditing();
 

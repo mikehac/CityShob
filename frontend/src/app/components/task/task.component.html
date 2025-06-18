@@ -8,6 +8,11 @@
     </p>
   </mat-card-content>
   <mat-card-content>
+    <p class="due-date-content">
+      Due Date: {{ task.dueDate | date : "shortDate" }}
+    </p>
+  </mat-card-content>
+  <mat-card-content>
     <p class="status-content">
       Status:
       <ng-container *ngIf="task.completed">
