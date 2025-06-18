@@ -15,3 +15,19 @@
   min-height: 100px;
   padding-bottom: 20px;
 }
+
+.status-content {
+  display: flex;
+  align-items: center;
+}
+.status-icon {
+  vertical-align: middle;
+  margin-left: 10px;
+
+  &.completed {
+    color: green;
+  }
+  &.incomplete {
+    color: red;
+  }
+}

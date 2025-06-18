@@ -34,7 +34,6 @@ export class EditDialogComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: { task: Task; actionType: 'edit' | 'add' }
   ) {
-    // Initialize form controls with task data if in edit mode
     if (this.data.actionType === 'edit' && this.data.task) {
       this.titleControl.setValue(this.data.task.title);
       this.descriptionControl.setValue(this.data.task.description || '');

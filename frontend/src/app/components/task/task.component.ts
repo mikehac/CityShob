@@ -7,10 +7,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { Task } from '../../models/task.model';
 import { DeleteDialogComponent } from '../dialogs/delete-dialog/delete-dialog.component';
 import { EditDialogComponent } from '../dialogs/edit-dialog/edit-dialog.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-task',
-  imports: [MatCardModule, MatButtonModule, MatDividerModule, MatIconModule],
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    CommonModule,
+  ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.scss',
 })

@@ -7,6 +7,17 @@
       {{ task.description }}
     </p>
   </mat-card-content>
+  <mat-card-content>
+    <p class="status-content">
+      Status:
+      <ng-container *ngIf="task.completed">
+        <mat-icon class="status-icon completed">check_circle</mat-icon>
+      </ng-container>
+      <ng-container *ngIf="!task.completed">
+        <mat-icon class="status-icon incomplete">cancel</mat-icon>
+      </ng-container>
+    </p>
+  </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="openEditDialog()">
       <mat-icon>edit</mat-icon>Edit
