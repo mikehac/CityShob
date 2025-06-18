@@ -11,5 +11,11 @@
   >
     Ok
   </button>
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    mat-dialog-close
+    (click)="editStatusService.resetEditing(data.currentTaskId)"
+  >
+    Cancel
+  </button>
 </mat-dialog-actions>

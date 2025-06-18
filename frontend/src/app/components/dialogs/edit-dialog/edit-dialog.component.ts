@@ -9,6 +9,8 @@ import { Task } from '../../../models/task.model';
 import { TaskService } from '../../../services/task.service';
 import { SocketService } from '../../../services/socket.service';
 
+import { EditStatusService } from '../../../services/edit-status.service';
+
 @Component({
   selector: 'app-edit-dialog',
   imports: [
@@ -25,6 +27,7 @@ import { SocketService } from '../../../services/socket.service';
 export class EditDialogComponent {
   taskService = inject(TaskService);
   socketService = inject(SocketService);
+  editStatusService = inject(EditStatusService);
 
   readonly completeTaskControl = new FormControl(false);
   readonly titleControl = new FormControl<string | null>('');
@@ -54,6 +57,7 @@ export class EditDialogComponent {
           .updateTask(this.data.task.id!, form.value as Task)
           .subscribe((task) => {
             this.socketService.emitEvent('task:update', task);
+            this.editStatusService.resetEditing(this.data.task.id!);
           });
       } else {
         this.taskService.createTask(form.value as Task).subscribe((task) => {

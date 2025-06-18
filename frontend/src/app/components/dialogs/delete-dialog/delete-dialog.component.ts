@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { TaskService } from '../../../services/task.service';
 import { SocketService } from '../../../services/socket.service';
+import { EditStatusService } from '../../../services/edit-status.service';
 
 @Component({
   selector: 'app-delete-dialog',
@@ -13,6 +14,7 @@ import { SocketService } from '../../../services/socket.service';
 export class DeleteDialogComponent {
   taskService = inject(TaskService);
   socketService = inject(SocketService);
+  editStatusService = inject(EditStatusService);
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { currentTaskId: string }

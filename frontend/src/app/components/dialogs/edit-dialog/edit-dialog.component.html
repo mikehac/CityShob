@@ -32,5 +32,11 @@
   >
     {{ data.actionType == "edit" ? "Update" : "Add" }}
   </button>
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    mat-dialog-close
+    (click)="editStatusService.resetEditing(this.data.task.id!)"
+  >
+    Cancel
+  </button>
 </mat-dialog-actions>

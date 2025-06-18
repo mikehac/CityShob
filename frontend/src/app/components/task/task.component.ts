@@ -8,6 +8,8 @@ import { Task } from '../../models/task.model';
 import { DeleteDialogComponent } from '../dialogs/delete-dialog/delete-dialog.component';
 import { EditDialogComponent } from '../dialogs/edit-dialog/edit-dialog.component';
 import { CommonModule } from '@angular/common';
+import { SocketService } from '../../services/socket.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-task',
@@ -23,9 +25,27 @@ import { CommonModule } from '@angular/common';
 })
 export class TaskComponent {
   @Input() task!: Task;
+  isEditable$: Observable<boolean> = of(false);
+
   readonly dialog = inject(MatDialog);
+  socketService = inject(SocketService);
+
+  constructor() {
+    this.socketService.onEvent('task:editing-disabled').subscribe((taskId) => {
+      if (this.task.id === (taskId as string)) {
+        this.isEditable$ = of(true);
+      }
+    });
+
+    this.socketService.onEvent('task:editing-enabled').subscribe((taskId) => {
+      if (this.task.id === (taskId as string)) {
+        this.isEditable$ = of(false);
+      }
+    });
+  }
 
   openDeleteDialog() {
+    this.disableEditing();
     this.dialog.open(DeleteDialogComponent, {
       width: '250px',
       enterAnimationDuration: '0ms',
@@ -36,11 +56,18 @@ export class TaskComponent {
 
   openEditDialog() {
     console.log('Opening edit dialog for task:', this.task);
+    // Send socket event to disable editing for other users
+    this.disableEditing();
+
     this.dialog.open(EditDialogComponent, {
       width: '1200px',
       enterAnimationDuration: '0ms',
       exitAnimationDuration: '0ms',
       data: { task: this.task, actionType: 'edit' },
     });
+  }
+
+  private disableEditing() {
+    this.socketService.emitEvent('task:disable-editing', this.task.id);
   }
 }

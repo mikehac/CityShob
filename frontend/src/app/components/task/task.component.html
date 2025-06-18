@@ -19,10 +19,20 @@
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="openEditDialog()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="openEditDialog()"
+      [disabled]="(isEditable$ | async) === true"
+    >
       <mat-icon>edit</mat-icon>Edit
     </button>
-    <button mat-flat-button color="warn" (click)="openDeleteDialog()">
+    <button
+      mat-flat-button
+      color="warn"
+      (click)="openDeleteDialog()"
+      [disabled]="(isEditable$ | async) === true"
+    >
       <mat-icon>delete</mat-icon>Delete
     </button>
   </mat-card-actions>
