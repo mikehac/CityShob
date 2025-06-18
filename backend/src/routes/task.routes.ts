@@ -1,7 +1,7 @@
 // src/routes/task.routes.ts
 
 import { Router } from "express";
-import { getAllTasks, getTaskById, createTask, updateTask, deleteTask } from "../controllers/task.controllers";
+import { getAllTasks, getTaskById, createTask, updateTask, deleteTask } from "../controllers/task.controller";
 
 const router = Router();
 

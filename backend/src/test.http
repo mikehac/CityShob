@@ -29,3 +29,21 @@ Content-Type: application/json
 ### Delete a specific task by ID
 DELETE http://localhost:3000/api/tasks/684fd7808c72721ecbd10ebb
 Content-Type: application/json
+
+### Register a new user
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "newuser@mail.com",
+  "password": "newpassword123"
+}
+
+### User login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "newuser@mail.com",
+  "password": "newpassword123"
+}

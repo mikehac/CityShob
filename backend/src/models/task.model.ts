@@ -1,5 +1,3 @@
-// src/models/task.model.ts
-
 import mongoose, { Schema } from "mongoose";
 
 export interface Task {

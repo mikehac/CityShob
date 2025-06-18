@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import taskRoutes from "./routes/task.routes";
+import authRoutes from "./routes/auth.routes";
 import { createServer } from "http";
 import dotenv from "dotenv";
 import { connectToDatabase } from "./config/database";
@@ -21,6 +22,7 @@ app.use(
 app.use(morgan("dev"));
 app.use(express.json());
 app.use("/api/tasks", taskRoutes);
+app.use("/api/auth", authRoutes);
 app.use(globalExceptionHandler);
 
 const httpServer = createServer(app);
