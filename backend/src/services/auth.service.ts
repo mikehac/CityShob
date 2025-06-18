@@ -5,7 +5,7 @@ import { config } from "../config/config";
 
 export class AuthService {
   async register(username: string, password: string): Promise<User> {
-    const existingUser = await User.findOne({ email: username });
+    const existingUser = await User.findOne({ username });
     if (existingUser) {
       throw new Error("User already exists");
     }
