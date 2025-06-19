@@ -12,16 +12,42 @@ export class AppException extends Error {
 }
 
 export function globalExceptionHandler(err: Error, req: Request, res: Response, next: NextFunction): void {
-  const status = err instanceof AppException ? err.status : 500;
-  const message = err.message || "Internal Server Error";
-  const details = err instanceof AppException ? err.details : undefined;
+  let status = 500;
+  let message = err.message || "Internal Server Error";
+  let details = undefined;
 
-  console.error(`[ERROR] ${req.method} ${req.url} - ${message}`);
+  // Handle custom AppException
+  if (err instanceof AppException) {
+    status = err.status;
+    details = err.details;
+  }
+  // Handle Mongoose validation errors
+  else if ((err as any).name === "ValidationError") {
+    status = 400;
+    message = "Validation Error";
+    details = (err as any).errors;
+  }
+  // Handle Mongoose duplicate key error
+  else if ((err as any).code === 11000) {
+    status = 409;
+    message = "Duplicate key error";
+    details = (err as any).keyValue;
+  }
+
+  // Log error stack in development
+  if (process.env.NODE_ENV !== "production") {
+    console.error(`[ERROR] ${req.method} ${req.url} - ${message}`);
+    if (err.stack) {
+      console.error(err.stack);
+    }
+  } else {
+    console.error(`[ERROR] ${req.method} ${req.url} - ${message}`);
+  }
 
   res.status(status).json({
     statusCode: status,
     message,
-    details,
+    details: process.env.NODE_ENV !== "production" ? details : undefined,
     timestamp: new Date().toISOString(),
   });
 }
