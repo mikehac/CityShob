@@ -1,15 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { CookieService } from 'ngx-cookie-service';
-import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   http = inject(HttpClient);
-  cookieService = inject(CookieService);
   baseUrl = environment.apiUrl + 'api/auth/';
 
   login(payload: { username: string; password: string }) {
