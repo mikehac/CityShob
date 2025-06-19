@@ -11,19 +11,30 @@ export class TaskService {
   http = inject(HttpClient);
   baseUrl = environment.apiUrl + 'api/tasks';
 
+  get additionalHeaders() {
+    return { withCredentials: true };
+  }
+
   getAllTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.baseUrl);
+    return this.http.get<Task[]>(this.baseUrl, this.additionalHeaders);
   }
 
   createTask(task: Partial<Task>): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl, task);
+    return this.http.post<Task>(this.baseUrl, task, this.additionalHeaders);
   }
 
   updateTask(id: string, task: Partial<Task>): Observable<Task> {
-    return this.http.put<Task>(`${this.baseUrl}/${id}`, task);
+    return this.http.put<Task>(
+      `${this.baseUrl}/${id}`,
+      task,
+      this.additionalHeaders
+    );
   }
 
   deleteTask(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http.delete<void>(
+      `${this.baseUrl}/${id}`,
+      this.additionalHeaders
+    );
   }
 }

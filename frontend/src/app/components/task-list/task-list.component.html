@@ -1,0 +1,24 @@
+<section class="main-container">
+  <header>
+    <h2>Tasks</h2>
+  </header>
+
+  <section class="task-content">
+    <header>
+      <button mat-flat-button (click)="openEditDialog()">
+        <mat-icon>add</mat-icon> Add Task
+      </button>
+      <div *ngIf="userName">
+        <span
+          >Hello <strong> {{ userName }}</strong></span
+        >
+        <button mat-button (click)="logout()">Logout</button>
+      </div>
+    </header>
+    <div class="task-container">
+      @for (task of tasks$|async; track task.id) {
+      <app-task [task]="task" />
+      }
+    </div>
+  </section>
+</section>
