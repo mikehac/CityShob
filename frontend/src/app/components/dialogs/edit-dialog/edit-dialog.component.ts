@@ -4,7 +4,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
@@ -13,6 +18,9 @@ import { TaskService } from '../../../services/task.service';
 import { SocketService } from '../../../services/socket.service';
 import { EditStatusService } from '../../../services/edit-status.service';
 import { MatIconModule } from '@angular/material/icon';
+import { Observable, of, combineLatest } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -25,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatIconModule,
+    CommonModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './edit-dialog.component.html',
@@ -35,43 +44,73 @@ export class EditDialogComponent {
   socketService = inject(SocketService);
   editStatusService = inject(EditStatusService);
 
-  readonly completeTaskControl = new FormControl(false);
-  readonly titleControl = new FormControl<string | null>('');
-  readonly descriptionControl = new FormControl<string | null>('');
-  readonly dueDateControl = new FormControl<Date | null>(null);
+  readonly titleControl: FormControl<string | null>;
+  readonly descriptionControl: FormControl<string | null>;
+  readonly completeTaskControl: FormControl<boolean | null>;
+  readonly dueDateControl: FormControl<Date | null>;
+
+  readonly isDisabled$: Observable<boolean>;
+
+  editForm: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { task: Task; actionType: 'edit' | 'add' }
   ) {
-    if (this.data.actionType === 'edit' && this.data.task) {
-      this.titleControl.setValue(this.data.task.title);
-      this.descriptionControl.setValue(this.data.task.description || '');
-      this.completeTaskControl.setValue(this.data.task.completed);
-      this.dueDateControl.setValue(this.data.task.dueDate || null);
-    }
+    this.titleControl = new FormControl<string | null>(
+      data.actionType === 'edit' && data.task ? data.task.title : '',
+      Validators.required
+    );
+    this.descriptionControl = new FormControl<string | null>(
+      data.actionType === 'edit' && data.task
+        ? data.task.description || ''
+        : '',
+      Validators.required
+    );
+    this.completeTaskControl = new FormControl<boolean | null>(
+      data.actionType === 'edit' && data.task ? data.task.completed : false
+    );
+    this.dueDateControl = new FormControl<Date | null>(
+      data.actionType === 'edit' && data.task ? data.task.dueDate || null : null
+    );
+
+    this.isDisabled$ = combineLatest([
+      this.titleControl.statusChanges.pipe(startWith(this.titleControl.status)),
+      this.descriptionControl.statusChanges.pipe(
+        startWith(this.descriptionControl.status)
+      ),
+    ]).pipe(
+      map(
+        ([titleStatus, descStatus]) =>
+          titleStatus === 'INVALID' || descStatus === 'INVALID'
+      )
+    );
+
+    this.editForm = new FormGroup({
+      title: this.titleControl,
+      description: this.descriptionControl,
+      dueDate: this.dueDateControl,
+      completed: this.completeTaskControl,
+    });
   }
 
-  updateOrAddHandler() {
-    const form = new FormControl({
-      title: this.titleControl.value,
-      description: this.descriptionControl.value,
-      dueDate: this.dueDateControl.value,
-      completed: this.completeTaskControl.value,
-    });
-    console.log(form.value);
-    if (form.valid) {
+  updateOrAddHandler($event: any) {
+    $event.preventDefault();
+
+    if (this.editForm.valid) {
       if (this.data.actionType === 'edit') {
         this.taskService
-          .updateTask(this.data.task.id!, form.value as Task)
+          .updateTask(this.data.task.id!, this.editForm.value as Task)
           .subscribe((task) => {
             this.socketService.emitEvent('task:update', task);
             this.editStatusService.resetEditing(this.data.task.id!);
           });
       } else {
-        this.taskService.createTask(form.value as Task).subscribe((task) => {
-          this.socketService.emitEvent('task:create', task);
-        });
+        this.taskService
+          .createTask(this.editForm.value as Task)
+          .subscribe((task) => {
+            this.socketService.emitEvent('task:create', task);
+          });
       }
     }
   }
