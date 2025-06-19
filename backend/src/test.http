@@ -12,6 +12,7 @@ Content-Type: application/json
 ### Get all tasks
 GET http://localhost:3000/api/tasks
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTJlMTA5YmRkZmZkMjRkMDhhZThhOCIsInVzZXJuYW1lIjoibmV3dXNlckBtYWlsLmNvbSIsImlhdCI6MTc1MDMzMDIwMCwiZXhwIjoxNzUwMzMzODAwfQ.3UBY2bX9EogGqFCiFiq4XDaX7a7CcqGdIn_0m4pfeZA
 
 
 ### Get a specific task by ID
@@ -34,9 +35,13 @@ Content-Type: application/json
 POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
+# {
+#   "username": "newuser@mail.com",
+#   "password": "newpassword123"
+# }
 {
-  "username": "newuser@mail.com",
-  "password": "newpassword123"
+  "username": "mike_hac@yahoo.com",
+  "password": "test123"
 }
 
 ### User login

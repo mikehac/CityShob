@@ -2,8 +2,10 @@
 
 import { Router } from "express";
 import { getAllTasks, getTaskById, createTask, updateTask, deleteTask } from "../controllers/task.controller";
+import { authenticateJWT } from "../middleware/auth.middleware";
 
 const router = Router();
+router.use(authenticateJWT);
 
 router.get("/", getAllTasks);
 router.get("/:id", getTaskById);

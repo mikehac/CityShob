@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import { connectToDatabase } from "./config/database";
 import { globalExceptionHandler } from "./customFilter/appExceptionsFilter";
 import socketIoInit from "./socket.io";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
@@ -17,10 +18,12 @@ app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:4200",
     methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
 );
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/tasks", taskRoutes);
 app.use("/api/auth", authRoutes);
 app.use(globalExceptionHandler);

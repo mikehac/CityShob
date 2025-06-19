@@ -1,6 +1,5 @@
-import { User } from "../models/user.model";
-import { AuthService } from "../services/auth.service";
 import { Request, Response } from "express";
+import { AuthService } from "../services/auth.service";
 
 const authService = new AuthService();
 
@@ -17,5 +16,17 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(401).json({ message: "Invalid credentials" });
     return;
   }
-  res.status(200).json({ token });
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+  });
+  res.json({ message: "Login successful" });
+};
+
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  res.clearCookie("token");
+  res.json({ message: "Logout successful" });
 };
