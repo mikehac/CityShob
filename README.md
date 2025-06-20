@@ -192,6 +192,107 @@ The application follows several architectural and design patterns to ensure main
 
 These design decisions ensure that the application is robust, maintainable, and follows modern web development practices.
 
+## Docker Setup
+
+The application has been containerized using Docker and can be easily deployed using Docker Compose. This provides consistency across different environments and simplifies the deployment process.
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- Disk space for volumes (minimum 1GB recommended)
+
+### Container Architecture
+
+- **MongoDB Container**: Database service
+- **Backend Container**: Node.js Express API service
+- **Frontend Container**: Angular application served with Nginx
+- **Docker Network**: Dedicated bridge network for inter-container communication
+- **Persistent Volume**: For MongoDB data storage
+
+### Configuration Files
+
+- **docker-compose.yml**: Main configuration file that defines services, networks, and volumes
+- **backend/Dockerfile**: Instructions for building the Node.js backend image
+- **frontend/Dockerfile**: Multi-stage build process for the Angular frontend with Nginx
+- **frontend/nginx.conf**: Nginx configuration for serving the Angular application
+
+### Environment Setup
+
+Before running the containers, create an environment file for the backend:
+
+```powershell
+# Navigate to backend directory
+cd backend
+
+# Create .env.cityshob.be file
+New-Item .env.cityshob.be -ItemType File
+
+# Add environment variables
+@"
+PORT=3000
+MONGO_URI=mongodb://mongodb:27017/tasks
+JWT_SECRET=your_secure_secret_key
+CLIENT_URL=http://localhost
+"@ | Out-File .env.cityshob.be -Encoding utf8
+```
+
+> **Important**: Note that the MongoDB connection string uses `mongodb` as the hostname, which refers to the container name in the Docker network.
+
+### Volume Configuration
+
+By default, the MongoDB data is persisted to a volume mapped to `C:\Volumes\cityshob\mongodb_data`. To change this location, modify the `device` parameter in the `docker-compose.yml` file:
+
+```yaml
+volumes:
+  mongodb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /your/custom/path/mongodb_data  # Linux/macOS path
+      # or
+      device: D:\YourCustomPath\mongodb_data  # Windows path
+      o: bind
+```
+
+Make sure the directory exists before running Docker Compose:
+
+```powershell
+# Create the directory for MongoDB data
+New-Item -ItemType Directory -Force -Path C:\Volumes\cityshob\mongodb_data
+```
+
+### Building and Running with Docker Compose
+
+```powershell
+# Build and start all services in detached mode
+docker-compose up -d
+
+# View logs of all containers
+docker-compose logs -f
+
+# View logs of a specific service
+docker-compose logs -f backend
+
+# Stop all services but keep volumes
+docker-compose down
+
+# Stop all services and remove volumes
+docker-compose down -v
+```
+
+### Accessing the Dockerized Application
+
+- Frontend application: http://localhost
+- Backend API: http://localhost:3000
+- MongoDB (from inside Docker network): mongodb://mongodb:27017
+
+### Troubleshooting Docker Deployment
+
+- **Container fails to start**: Check logs with `docker-compose logs <service-name>`
+- **Database connection issues**: Ensure MongoDB container is healthy with `docker-compose ps`
+- **Volume mounting problems**: Verify that the path specified in volume configuration exists and has proper permissions
+
 ## License
 
 ISC
