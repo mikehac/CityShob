@@ -2,6 +2,30 @@
 
 A full-stack task management application built with MEAN stack (MongoDB, Express, Angular, Node.js) with real-time updates using Socket.IO.
 
+## Technology Stack
+
+### Backend
+
+- **Node.js**: JavaScript runtime environment
+- **Express**: Web application framework for Node.js
+- **TypeScript**: Typed superset of JavaScript
+- **MongoDB**: NoSQL database for storing task and user information
+- **Mongoose**: MongoDB object modeling for Node.js
+- **Socket.IO**: Real-time bidirectional event-based communication
+- **JWT**: JSON Web Tokens for authentication
+- **bcrypt**: Password hashing
+- **dotenv**: Environment variable management
+- **cors**: Cross-Origin Resource Sharing
+- **cookie-parser**: Middleware for parsing cookies
+
+### Frontend
+
+- **Angular 19**: Frontend framework
+- **Angular Material**: UI component library
+- **RxJS**: Reactive programming library
+- **Socket.IO-client**: Client library for Socket.IO
+- **ngx-cookie-service**: Service for handling cookies
+
 ## Project Structure
 
 ```
@@ -32,63 +56,6 @@ A full-stack task management application built with MEAN stack (MongoDB, Express
     ├── angular.json
     └── package.json
 ```
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v16 or later)
-- npm (v7 or later)
-- MongoDB instance (local or cloud-based)
-
-### Environment Setup
-
-#### Backend
-
-Create a `.env` file in the `backend` directory with the following variables:
-
-```
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/tasks
-JWT_SECRET=your_jwt_secret_key
-CLIENT_URL=http://localhost:4200
-```
-
-### Installation and Running
-
-#### Backend
-
-```powershell
-# Navigate to backend directory
-cd backend
-
-# Install dependencies
-npm install
-
-# Run in development mode
-npm run dev
-
-# Or build and run in production mode
-npm run build
-npm start
-```
-
-The backend server will be running at http://localhost:3000
-
-#### Frontend
-
-```powershell
-# Navigate to frontend directory
-cd frontend
-
-# Install dependencies
-npm install
-
-# Run in development mode
-npm start
-```
-
-The frontend application will be accessible at http://localhost:4200
 
 ## Features
 
@@ -223,17 +190,22 @@ The application follows several architectural and design patterns to ensure main
 
 These design decisions ensure that the application is robust, maintainable, and follows modern web development practices.
 
-## Development
+## Development Commands
 
 ### Backend
 
 ```powershell
+# Run development server with auto-reload
 npm run dev
+
+# Debug mode
+npm run start:debug
 ```
 
 ### Frontend
 
 ```powershell
+# Run development server with auto-reload
 npm run watch
 ```
 
@@ -252,14 +224,6 @@ npm run build
 ```
 
 The built files will be located in the `frontend/dist/frontend` directory.
-
-## Debugging
-
-### Backend
-
-```powershell
-npm run start:debug
-```
 
 ## License
 
