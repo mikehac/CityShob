@@ -281,9 +281,21 @@ docker-compose down
 docker-compose down -v
 ```
 
+### Testing the API with test.http
+
+After your Docker containers are running, you should create a user account through the API:
+
+1. Open the `backend/src/test.http` file in your editor
+2. Find the section labeled `### Register a new user`
+3. You can change username and password if you wish
+4. Run this HTTP POST request to create a new user account
+5. After successful registration, you can proceed to login using the created credentials
+
+> **Note**: If you're using VS Code, install the "REST Client" extension to execute HTTP requests directly from the editor.
+
 ### Accessing the Dockerized Application
 
-- Frontend application: http://localhost
+- Frontend application: http://localhost/login
 - Backend API: http://localhost:3000
 - MongoDB (from inside Docker network): mongodb://mongodb:27017
 
