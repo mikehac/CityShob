@@ -15,10 +15,18 @@
         <button mat-button (click)="logout()">Logout</button>
       </div>
     </header>
-    <div class="task-container">
-      @for (task of tasks$|async; track task.id) {
-      <app-task [task]="task" />
-      }
-    </div>
+
+    <ng-container *ngIf="tasks$ | async as tasks">
+      <div class="task-container" *ngIf="tasks.length > 0; else noTasks">
+        @for (task of tasks; track task.id) {
+        <app-task [task]="task" />
+        }
+      </div>
+      <ng-template #noTasks>
+        <div class="empty-tasks">
+          <p>No tasks available. Please add a task.</p>
+        </div>
+      </ng-template>
+    </ng-container>
   </section>
 </section>
