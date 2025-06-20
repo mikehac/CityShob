@@ -192,44 +192,6 @@ The application follows several architectural and design patterns to ensure main
 
 These design decisions ensure that the application is robust, maintainable, and follows modern web development practices.
 
-## Development Commands
-
-### Backend
-
-```powershell
-# Run development server with auto-reload
-npm run dev
-
-# Debug mode
-npm run start:debug
-```
-
-### Frontend
-
-```powershell
-# Available commands for development:
-npm start    # Standard development server (alias for ng serve)
-npm run watch # Build with watch mode for file changes
-ng serve     # Direct Angular CLI command
-ng serve --open # Opens browser automatically
-```
-
-## Building for Production
-
-### Backend
-
-```powershell
-npm run build
-```
-
-### Frontend
-
-```powershell
-npm run build
-```
-
-The built files will be located in the `frontend/dist/frontend` directory.
-
 ## License
 
 ISC
