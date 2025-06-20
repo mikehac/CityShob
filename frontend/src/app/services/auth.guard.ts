@@ -8,6 +8,8 @@ export class AuthGuard implements CanActivate {
   cookieService = inject(CookieService);
 
   canActivate(): boolean | UrlTree {
+    // This guard is a basic implementation that checks for a token in cookies.
+    // In a real application, I would likely want to check the token's validity and expiration.
     const isLoggedIn = !!this.cookieService.get('token');
     if (isLoggedIn) {
       return true;
