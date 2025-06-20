@@ -137,8 +137,10 @@ cd frontend
 # Install dependencies
 npm install
 
-# Start the development server
-npm start
+# Start the development server using one of these commands:
+npm start   # uses the script defined in package.json
+# OR
+ng serve    # uses Angular CLI directly
 ```
 
 ### 5. Access the Application
@@ -205,8 +207,11 @@ npm run start:debug
 ### Frontend
 
 ```powershell
-# Run development server with auto-reload
-npm run watch
+# Available commands for development:
+npm start    # Standard development server (alias for ng serve)
+npm run watch # Build with watch mode for file changes
+ng serve     # Direct Angular CLI command
+ng serve --open # Opens browser automatically
 ```
 
 ## Building for Production
